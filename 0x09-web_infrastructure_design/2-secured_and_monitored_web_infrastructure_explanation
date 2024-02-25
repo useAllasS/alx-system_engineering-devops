@@ -1,0 +1,36 @@
+Three Server Web Infrastructure Design with Security and Monitoring:
+Components:
+Load Balancer (with SSL Termination): Handles incoming HTTPS requests and distributes them among the web servers.
+Web Servers (Nginx with SSL): Serve encrypted traffic over HTTPS and forward requests to the application server.
+Application Servers: Execute application logic and generate dynamic content.
+Database Servers (MySQL Primary and Replica): Store website data and handle read and write operations.
+Additional Elements:
+Firewalls (on each server): Protect servers from unauthorized access and malicious traffic.
+SSL Certificate: Enables HTTPS encryption for secure communication between clients and servers.
+Monitoring Clients (e.g., Sumo Logic Data Collectors): Collect data on server performance, security, and availability for monitoring and analysis.
+Explanation of Specifics:
+Why Add Firewalls?
+
+Firewalls are added to each server to control incoming and outgoing network traffic, protecting servers from unauthorized access and potential security threats.
+Why Serve Traffic over HTTPS?
+
+HTTPS encrypts data transmitted between clients and servers, ensuring confidentiality, integrity, and authenticity of the information exchanged. It prevents eavesdropping, data tampering, and Man-in-the-Middle attacks.
+Purpose of Monitoring:
+
+Monitoring is used to track server performance, detect anomalies, troubleshoot issues, ensure uptime, and optimize resource utilization. It provides insights into system health, security incidents, and user experience.
+How Monitoring Data is Collected:
+
+Monitoring clients (e.g., Sumo Logic Data Collectors) are installed on each server to collect performance metrics, logs, and other relevant data. They transmit this data to a central monitoring platform for analysis and visualization.
+Monitoring Web Server QPS (Queries Per Second):
+
+To monitor web server QPS, you can configure monitoring clients to track incoming HTTP requests or analyze server logs for request frequency. Monitoring tools can generate alerts or reports based on QPS thresholds to identify performance issues or traffic spikes.
+Issues with the Infrastructure:
+Terminating SSL at Load Balancer Level:
+
+Terminating SSL at the load balancer exposes decrypted traffic within the internal network, potentially compromising data security. It's recommended to encrypt traffic end-to-end, from clients to servers.
+Single MySQL Server for Writes:
+
+Having only one MySQL server capable of accepting writes creates a single point of failure. If the primary server fails, write operations will be disrupted, impacting website functionality. Implementing a high-availability solution with failover capability mitigates this risk.
+Uniform Servers with Same Components:
+
+Deploying servers with identical components (database, web server, application server) may lead to resource contention and performance bottlenecks, especially under high traffic loads or varying workloads. It's advisable to optimize server configurations based on specific roles and workload characteristics. Additionally, having diversity in components can enhance fault tolerance and resilience.
