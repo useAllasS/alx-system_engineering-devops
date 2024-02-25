@@ -1,0 +1,43 @@
+Web Infrastructure Design:
+Components:
+Server: A physical or virtual machine responsible for hosting and serving the website.
+Web Server (Nginx): Software that handles HTTP requests from clients (browsers) and serves web pages. In this case, Nginx will serve static content and proxy dynamic requests to the application server.
+Application Server: Software responsible for executing application logic and generating dynamic content. In this case, let's consider using Flask, a lightweight WSGI web application framework.
+Application Files: Your website's codebase written in Python using the Flask framework.
+Database (MySQL): A relational database management system to store and retrieve website data.
+Infrastructure Setup:
+Server IP: 8.8.8.8
+Domain Name: foobar.com
+DNS Record: A DNS 'A' record for foobar.com pointing to 8.8.8.8; a DNS 'CNAME' record for www.foobar.com pointing to foobar.com
+Explanation of Specifics:
+What is a Server?
+
+A server is a computer or software that provides functionality or services to other computers or clients (such as web browsers) over a network.
+Role of Domain Name:
+
+A domain name is a human-readable address used to access websites. It provides a memorable way for users to reach your website. In this case, foobar.com is the domain name.
+Type of DNS Record 'www' in www.foobar.com:
+
+The 'www' in www.foobar.com is typically a DNS 'CNAME' record, which is an alias pointing to another domain name (in this case, foobar.com).
+Role of Web Server:
+
+The web server (Nginx) handles incoming HTTP requests from clients and serves static content. It can also manage SSL/TLS encryption and act as a reverse proxy to forward dynamic requests to the application server.
+Role of Application Server:
+
+The application server executes the backend code (e.g., Python Flask application) and generates dynamic content based on client requests. It interacts with the database to retrieve or store data.
+Role of Database:
+
+The database (MySQL) stores structured data used by the website. It handles data storage, retrieval, and manipulation for various functionalities of the website.
+Server Communication with User's Computer:
+
+The server communicates with the user's computer over the Internet using the HTTP protocol. When a user requests a webpage, the server processes the request, retrieves necessary data, generates the webpage, and sends it back to the user's browser.
+Issues with the Infrastructure:
+Single Point of Failure (SPOF):
+
+Since all components are hosted on a single server, any failure in the server hardware or software could lead to downtime for the entire website.
+Downtime during Maintenance:
+
+Performing maintenance tasks, such as deploying new code or updating server configurations, requires restarting the web server. During this time, the website may be inaccessible to users, resulting in downtime.
+Scalability Challenges:
+
+As traffic increases, a single server may struggle to handle the load efficiently. Scaling resources (such as adding more servers or utilizing cloud services) becomes difficult with this infrastructure setup, potentially leading to performance issues during peak traffic periods.
