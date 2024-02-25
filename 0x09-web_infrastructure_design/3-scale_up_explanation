@@ -1,0 +1,31 @@
+Split Infrastructure Design with Load Balancer Cluster:
+Components:
+Server 1:
+
+Web Server (Nginx): Serves static content and handles incoming HTTP requests.
+Application Server: Executes application logic and generates dynamic content.
+Database (MySQL): Stores website data.
+Server 2:
+
+Load Balancer (HAproxy): Distributes incoming traffic among the web servers.
+Monitoring Client: Collects data on server performance and health.
+Load Balancer Configuration:
+HAproxy is configured as a cluster with Server 1's load balancer.
+Both load balancers share information about server health and distribute traffic evenly.
+Explanation of Specifics:
+Why Add a Load Balancer Cluster?
+
+Implementing a load balancer cluster ensures high availability and fault tolerance. If one load balancer fails, the other one can continue distributing traffic, preventing downtime and improving reliability.
+Split Components with Their Own Servers:
+
+Separating components onto different servers improves scalability, flexibility, and fault isolation. It allows for better resource allocation, independent scaling of each component, and easier maintenance and troubleshooting.
+Load Balancer Configuration:
+
+Configuring HAproxy as a cluster ensures redundancy and load balancing across multiple load balancer instances. It enhances reliability and performance by distributing traffic effectively and enabling failover in case of load balancer failure.
+Issues with the Infrastructure:
+Complexity of Load Balancer Cluster Configuration:
+
+Setting up and managing a load balancer cluster requires additional configuration and maintenance overhead. It's essential to ensure proper synchronization and communication between cluster nodes to avoid issues such as split-brain scenarios or inconsistent traffic distribution.
+Potential Single Points of Failure:
+
+While the load balancer cluster mitigates the risk of load balancer failure, other components such as the web server, application server, and database remain single points of failure. Implementing redundancy and failover mechanisms for these components is necessary to ensure high availability and resilience.
