@@ -1,0 +1,39 @@
+Three Server Web Infrastructure Design:
+Components:
+Load Balancer (HAproxy): Distributes incoming traffic across multiple servers to improve performance, scalability, and reliability.
+Web Servers (Nginx): Serve static content and forward dynamic requests to the application server.
+Application Server: Executes the application logic and generates dynamic content.
+Application Files: Your website's codebase deployed on each application server.
+Database (MySQL): Stores website data.
+Infrastructure Setup:
+Load Balancer IP: LB_IP (e.g., 10.0.0.1)
+Server 1 IP: Server1_IP (e.g., 10.0.0.2)
+Server 2 IP: Server2_IP (e.g., 10.0.0.3)
+Domain Name: foobar.com
+DNS Record: A DNS 'A' record for foobar.com pointing to LB_IP; a DNS 'CNAME' record for www.foobar.com pointing to foobar.com
+Explanation of Specifics:
+Why Add Load Balancer?
+
+The load balancer distributes incoming traffic across multiple servers to ensure high availability, improve scalability, and prevent any single server from becoming overloaded.
+Load Balancer Distribution Algorithm:
+
+HAproxy is configured with a round-robin distribution algorithm. This algorithm cycles through each server in sequence, evenly distributing incoming requests among them.
+Active-Active vs. Active-Passive Setup:
+
+The setup is Active-Active, where all servers actively handle requests simultaneously. In Active-Passive setup, only one server handles traffic while the others remain idle until failover occurs.
+Database Primary-Replica (Master-Slave) Cluster:
+
+In this setup, the primary node (Master) handles write operations (insert, update, delete), while replica nodes (Slaves) replicate data from the primary node and handle read operations. This setup improves performance, fault tolerance, and data redundancy.
+Difference Between Primary and Replica Nodes for the Application:
+
+The primary node handles write operations, ensuring consistency and integrity of data. The application interacts with the primary node to perform write operations. Replica nodes handle read operations, improving scalability and performance by distributing read requests across multiple nodes.
+Issues with the Infrastructure:
+Single Points of Failure (SPOF):
+
+The load balancer is a single point of failure. If it fails, the entire website becomes inaccessible. Implementing redundancy by adding another load balancer can mitigate this risk.
+Security Issues:
+
+Lack of firewall configurations exposes servers to potential security threats. Implementing firewalls to restrict unauthorized access and enabling HTTPS to encrypt data in transit are essential for securing the infrastructure.
+No Monitoring:
+
+Without monitoring tools, it's challenging to identify performance issues, resource utilization, and potential security breaches. Implementing monitoring solutions allows for proactive management and timely resolution of issues.
