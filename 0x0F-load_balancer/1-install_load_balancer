@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
-#Double the number of webservers
-sudo apt update
-sudo apt install haproxy -y
-sudo sh -c 'echo "\nlisten myserver\n\tbind *:80\n\tbalance roundrobin\n\tserver web-01 18.233.63.50:80 check\n\tserver web-02 54.236.49.251:80 check\n" >> /etc/haproxy/haproxy.cfg'
-sudo service haproxy restart
+# configures a new HAproxy as a load balancer
+
+# Install HAproxy on a server
+apt-get -y update
+apt-get -y install haproxy=1.6.\*
+
+# Configure haproxy configuration file to distribute requests using a roundrobin algorithm
+echo '
+frontend all-as.tech
+        bind 0:80
+        default_backend web_servers
+
+backend web_servers
+        balance roundrobin
+        server 524428-web-01 18.233.63.50:80
+        server 524428-web-02 54.236.49.251:80
+' >> /etc/haproxy/haproxy.cfg
+
+# Restart HAproxy service
+service haproxy restart
