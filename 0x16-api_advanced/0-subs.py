@@ -1,17 +1,26 @@
 #!/usr/bin/python3
-"""Module for task 0"""
+"""This script will return the number of subscribers associated with
+a subreddit
+"""
+import requests
+from sys import argv
 
 
 def number_of_subscribers(subreddit):
-    """Queries the Reddit API and returns the number of subscribers
-    to the subreddit"""
-    import requests
+    """Method get the number of users subscribed to a subreddit
 
-    sub_info = requests.get("https://www.reddit.com/r/{}/about.json"
-                            .format(subreddit),
-                            headers={"User-Agent": "My-User-Agent"},
-                            allow_redirects=False)
-    if sub_info.status_code >= 300:
+    subreddit (Str)- subreddit to check
+
+    Returns - number of users (INT) else 0 (INT) if not subreddit is found
+    """
+    try:
+        h = {'user-agent': 'Mozilla/5.0', 'allow_redirects': 'false'}
+        url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+        req = requests.get(url, headers=h)
+        return req.json().get('data').get('subscribers', 0)
+    except Exception as e:
         return 0
 
-    return sub_info.json().get("data").get("subscribers")
+
+if __name__ == "__main__":
+    pass
